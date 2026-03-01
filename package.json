@@ -2,25 +2,50 @@
   "name": "cli-loaders",
   "version": "1.0.0",
   "description": "Braille unicode spinners as React decorator components",
-  "main": "src/index.ts",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/cli-loaders.cjs",
+  "module": "./dist/cli-loaders.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/cli-loaders.js",
+      "require": "./dist/cli-loaders.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "prepublishOnly": "npm run build"
   },
-  "keywords": ["react", "spinner", "braille", "unicode", "animation", "loading"],
+  "keywords": [
+    "react",
+    "spinner",
+    "braille",
+    "unicode",
+    "animation",
+    "loading",
+    "decorator"
+  ],
   "author": "",
   "license": "MIT",
-  "type": "module",
-  "dependencies": {
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "unicode-animations": "^1.0.3"
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "unicode-animations": ">=1.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "unicode-animations": "^1.0.3",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4"
   }
 }
