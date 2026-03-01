@@ -56,14 +56,13 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinne
     <span
       ref={ref}
       className={className}
-      style={{ display: 'inline-block', position: 'relative', ...style }}
+      style={{ display: 'inline-flex', alignItems: 'baseline', lineHeight: 1, position: 'relative', ...style }}
       {...rest}
     >
       {/* Glyph — hidden from AT, it's just visual noise */}
       <span
         aria-hidden="true"
         style={{
-          display: 'inline-block',
           fontFamily: 'monospace',
           lineHeight: 1,
           userSelect: 'none',
@@ -90,6 +89,10 @@ export interface SpinnerOverlayProps extends BaseSpinnerProps {
   backdrop?: string;
   /** Show the overlay */
   active?: boolean;
+  /** Style applied to the outer wrapper div */
+  containerStyle?: CSSProperties;
+  /** Class applied to the outer wrapper div */
+  containerClassName?: string;
 }
 
 export function SpinnerOverlay({
@@ -98,10 +101,16 @@ export function SpinnerOverlay({
   backdrop = 'rgba(0, 0, 0, 0.35)',
   size = '2rem',
   label = 'Loading',
+  containerStyle,
+  containerClassName,
   ...spinnerProps
 }: SpinnerOverlayProps) {
   return (
-    <div style={{ position: 'relative', display: 'inline-block' }} aria-busy={active}>
+    <div
+      className={containerClassName}
+      style={{ position: 'relative', display: 'block', ...containerStyle }}
+      aria-busy={active}
+    >
       {/* inert prevents keyboard/AT access to content behind the overlay */}
       <div inert={active || undefined}>{children}</div>
       {active && (

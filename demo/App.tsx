@@ -155,9 +155,13 @@ export default function App() {
   const [speed, setSpeed] = useState(1);
   const [size, setSize] = useState('1.5rem');
   const [paused, setPaused] = useState(false);
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(() =>
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  );
 
-  const [loadingCard, setLoadingCard] = useState(false);
+  const [loadingOverlay, setLoadingOverlay] = useState(false);
+  const [loadingSave, setLoadingSave] = useState(false);
+  const [loadingDeploy, setLoadingDeploy] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   // Detect prefers-reduced-motion
@@ -169,10 +173,14 @@ export default function App() {
     return () => mq.removeEventListener('change', handler);
   }, []);
 
-  // Fake async action for SpinnerButton demo
-  function triggerLoad() {
-    setLoadingCard(true);
-    setTimeout(() => setLoadingCard(false), 2200);
+  function triggerSave() {
+    setLoadingSave(true);
+    setTimeout(() => setLoadingSave(false), 2000);
+  }
+
+  function triggerDeploy() {
+    setLoadingDeploy(true);
+    setTimeout(() => setLoadingDeploy(false), 3000);
   }
 
   const bg = dark ? '#0a0a0f' : '#f9f9fb';
@@ -185,6 +193,20 @@ export default function App() {
     <SpinnerProvider defaultColor={color} defaultSpeed={speed}>
       <div style={{ minHeight: '100vh', background: bg, color: fg, fontFamily: 'system-ui, sans-serif', padding: '3rem 2rem' }}>
 
+        {/* Theme toggle — fixed top-right, demo-only */}
+        <button
+          onClick={() => setDark(d => !d)}
+          title="Toggle demo theme"
+          style={{
+            position: 'fixed', top: '1rem', right: '1rem', zIndex: 100,
+            padding: '0.35rem 0.7rem', borderRadius: 8,
+            border: `1px solid ${cardBorder}`, background: cardBg,
+            color: muted, fontSize: '0.78rem', cursor: 'pointer',
+          }}
+        >
+          {dark ? '☀' : '☾'}
+        </button>
+
         {/* Header */}
         <header style={{ maxWidth: 900, margin: '0 auto 3rem', textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '0.6rem' }}>
@@ -194,9 +216,16 @@ export default function App() {
             </h1>
             <SpinnerTrail name="helix" color={color} size="1.8rem" speed={speed} paused={paused} trailLength={4} minOpacity={1} />
           </div>
-          <p style={{ margin: 0, color: muted, fontSize: '1rem' }}>
+          <p style={{ margin: '0 0 0.75rem', color: muted, fontSize: '1rem' }}>
             Braille unicode spinners as React decorator components
           </p>
+          <button onClick={() => setPaused(p => !p)} style={{
+            padding: '0.3rem 0.9rem', borderRadius: 8,
+            border: `1px solid ${cardBorder}`, background: 'transparent',
+            color: muted, fontSize: '0.78rem', cursor: 'pointer',
+          }}>
+            {paused ? '▶ Resume' : '⏸ Pause'}
+          </button>
 
           {/* Reduced motion banner */}
           {reducedMotion && (
@@ -217,7 +246,6 @@ export default function App() {
 
         {/* Controls */}
         <section style={{ maxWidth: 900, margin: '0 auto 3rem', background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 12, padding: '1.5rem' }}>
-          <h2 style={{ margin: '0 0 1.25rem', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: muted }}>Controls</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', alignItems: 'flex-end' }}>
 
             {/* Colour */}
@@ -268,23 +296,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Pause */}
-            <button onClick={() => setPaused(p => !p)} style={{
-              padding: '0.35rem 0.85rem', borderRadius: 8,
-              border: `1px solid ${cardBorder}`, background: paused ? cardBg : 'transparent',
-              color: fg, fontSize: '0.78rem', cursor: 'pointer',
-            }}>
-              {paused ? '▶ Resume' : '⏸ Pause'}
-            </button>
-
-            {/* Dark / light */}
-            <button onClick={() => setDark(d => !d)} style={{
-              padding: '0.35rem 0.85rem', borderRadius: 8,
-              border: `1px solid ${cardBorder}`, background: 'transparent',
-              color: fg, fontSize: '0.78rem', cursor: 'pointer',
-            }}>
-              {dark ? '☀ Light' : '☾ Dark'}
-            </button>
           </div>
         </section>
 
@@ -341,12 +352,12 @@ export default function App() {
             </div>
 
             {/* SpinnerTrail */}
-            <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 10, padding: '1.25rem' }}>
+            <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 10, padding: '1.25rem', overflow: 'hidden' }}>
               <p style={{ margin: '0 0 0.75rem', fontSize: '0.7rem', color: muted, fontFamily: 'monospace' }}>SpinnerTrail</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <SpinnerTrail name="braillewave" color={color} size="2rem" speed={speed} paused={paused} trailLength={5} />
-                <SpinnerTrail name="helix" color={color} size="1.5rem" speed={speed} paused={paused} trailLength={4} />
-                <SpinnerTrail name="waverows" color={color} size="1.25rem" speed={speed} paused={paused} trailLength={3} />
+                <SpinnerTrail name="braille" color={color} size="2rem" speed={speed} paused={paused} trailLength={6} />
+                <SpinnerTrail name="orbit" color={color} size="1.5rem" speed={speed} paused={paused} trailLength={5} />
+                <SpinnerTrail name="breathe" color={color} size="1.25rem" speed={speed} paused={paused} trailLength={4} />
               </div>
             </div>
 
@@ -355,18 +366,30 @@ export default function App() {
               <p style={{ margin: '0 0 0.75rem', fontSize: '0.7rem', color: muted, fontFamily: 'monospace' }}>SpinnerOverlay</p>
               <SpinnerOverlay
                 name="pulse" color={color} size="2rem" speed={speed}
-                active={loadingCard}
-                backdrop={dark ? 'rgba(10,10,15,0.75)' : 'rgba(249,249,251,0.8)'}
-                style={{ width: '100%' }}
+                active={loadingOverlay}
+                backdrop={dark ? 'rgba(10,10,15,0.8)' : 'rgba(249,249,251,0.88)'}
               >
-                <div style={{
-                  height: 90, borderRadius: 8, background: dark ? '#1e1e28' : '#e8e8f0',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: muted, fontSize: '0.8rem',
-                }}>
-                  Content behind overlay
+                <div style={{ borderRadius: 8, background: dark ? '#1e1e28' : '#e8e8f0', padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {['Dashboard', 'Analytics', 'Reports'].map(item => (
+                    <div key={item} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.8rem', color: muted }}>
+                      <span>{item}</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: '0.75rem' }}>{Math.floor(Math.random() * 900 + 100)}</span>
+                    </div>
+                  ))}
                 </div>
               </SpinnerOverlay>
+              <button
+                onClick={() => { setLoadingOverlay(true); setTimeout(() => setLoadingOverlay(false), 2000); }}
+                disabled={loadingOverlay}
+                style={{
+                  marginTop: '0.75rem', width: '100%', padding: '0.4rem',
+                  borderRadius: 6, border: `1px solid ${cardBorder}`,
+                  background: 'transparent', color: loadingOverlay ? muted : fg,
+                  fontSize: '0.78rem', cursor: loadingOverlay ? 'not-allowed' : 'pointer',
+                }}
+              >
+                {loadingOverlay ? 'Loading…' : 'Trigger overlay'}
+              </button>
             </div>
 
             {/* SpinnerButton */}
@@ -374,28 +397,28 @@ export default function App() {
               <p style={{ margin: '0 0 0.75rem', fontSize: '0.7rem', color: muted, fontFamily: 'monospace' }}>SpinnerButton</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                 <SpinnerButton
-                  loading={loadingCard}
-                  onClick={triggerLoad}
+                  loading={loadingSave}
+                  onClick={triggerSave}
                   spinnerProps={{ name: 'orbit', color }}
                   style={{
                     padding: '0.5rem 1rem', borderRadius: 8,
                     background: hex8(color, '22'), border: `1px solid ${hex8(color, '55')}`,
-                    color, fontSize: '0.85rem',
+                    color, fontSize: '0.85rem', justifyContent: 'center',
                   }}
                 >
-                  {loadingCard ? 'Saving…' : 'Save changes'}
+                  {loadingSave ? 'Saving…' : 'Save changes'}
                 </SpinnerButton>
                 <SpinnerButton
-                  loading={loadingCard}
-                  spinnerPosition="right"
+                  loading={loadingDeploy}
+                  onClick={triggerDeploy}
                   spinnerProps={{ name: 'cascade', color }}
                   style={{
                     padding: '0.5rem 1rem', borderRadius: 8,
                     background: 'transparent', border: `1px solid ${cardBorder}`,
-                    color: fg, fontSize: '0.85rem',
+                    color: fg, fontSize: '0.85rem', justifyContent: 'center',
                   }}
                 >
-                  {loadingCard ? 'Deploying…' : 'Deploy'}
+                  {loadingDeploy ? 'Deploying…' : 'Deploy'}
                 </SpinnerButton>
               </div>
             </div>
