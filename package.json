@@ -23,6 +23,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:demo": "vite build --config vite.demo.config.ts",
+    "gen:svgs": "node scripts/gen-svgs.mjs",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

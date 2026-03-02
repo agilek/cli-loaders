@@ -1,6 +1,6 @@
 # cli-loaders
 
-> Braille unicode spinners as React decorator components.
+> Braille unicode spinners as React decorator components. — **[Live demo →](https://cli-loaders-two.vercel.app)**
 
 `cli-loaders` gives you 19 animated braille-glyph spinners as a set of composable, accessible React components. Zero runtime dependencies beyond React itself.
 
@@ -262,27 +262,27 @@ useSpinnerFrames(
 
 ## Available spinners
 
-| Name | Character style | Approx. interval |
-|---|---|---|
-| `braille` | Single rotating glyph | 80 ms |
-| `braillewave` | Wave across a wide glyph | 100 ms |
-| `dna` | Interleaved helix columns | 100 ms |
-| `scan` | Dot scanning pattern | 100 ms |
-| `rain` | Falling dot trails | 100 ms |
-| `scanline` | Fill & unfill row by row | 120 ms |
-| `line` | Bouncing horizontal bar | 70 ms |
-| `pulse` | Expanding radial pulse | 100 ms |
-| `snake` | Dot snake traversal | 100 ms |
-| `sparkle` | Random scatter glint | 100 ms |
-| `cascade` | Column waterfall | 100 ms |
-| `columns` | Rising/falling columns | 100 ms |
-| `orbit` | Single dot in orbit | 80 ms |
-| `breathe` | Density swell and fade | 120 ms |
-| `waverows` | Sine-wave row oscillation | 80 ms |
-| `checkerboard` | Alternating checkerboard | 200 ms |
-| `helix` | Rotating double helix | 80 ms |
-| `fillsweep` | Left-to-right fill sweep | 80 ms |
-| `diagswipe` | Diagonal wipe | 80 ms |
+<div align="center">
+  <img src="assets/spinners/braille.svg" alt="braille">
+  <img src="assets/spinners/orbit.svg" alt="orbit">
+  <img src="assets/spinners/breathe.svg" alt="breathe">
+  <img src="assets/spinners/braillewave.svg" alt="braillewave">
+  <img src="assets/spinners/dna.svg" alt="dna">
+  <img src="assets/spinners/waverows.svg" alt="waverows">
+  <img src="assets/spinners/helix.svg" alt="helix">
+  <img src="assets/spinners/fillsweep.svg" alt="fillsweep">
+  <img src="assets/spinners/diagswipe.svg" alt="diagswipe">
+  <img src="assets/spinners/scanline.svg" alt="scanline">
+  <img src="assets/spinners/line.svg" alt="line">
+  <img src="assets/spinners/cascade.svg" alt="cascade">
+  <img src="assets/spinners/scan.svg" alt="scan">
+  <img src="assets/spinners/rain.svg" alt="rain">
+  <img src="assets/spinners/pulse.svg" alt="pulse">
+  <img src="assets/spinners/snake.svg" alt="snake">
+  <img src="assets/spinners/sparkle.svg" alt="sparkle">
+  <img src="assets/spinners/columns.svg" alt="columns">
+  <img src="assets/spinners/checkerboard.svg" alt="checkerboard">
+</div>
 
 All names are available as the `SpinnerName` union type.
 

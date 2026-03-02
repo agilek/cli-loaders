@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="84">
+<style>@keyframes s{0%,12.499%{opacity:1}12.500%,100%{opacity:0}}.f0{animation:s 960ms linear infinite;animation-delay:0ms}.f1{animation:s 960ms linear infinite;animation-delay:-120ms}.f2{animation:s 960ms linear infinite;animation-delay:-240ms}.f3{animation:s 960ms linear infinite;animation-delay:-360ms}.f4{animation:s 960ms linear infinite;animation-delay:-480ms}.f5{animation:s 960ms linear infinite;animation-delay:-600ms}.f6{animation:s 960ms linear infinite;animation-delay:-720ms}.f7{animation:s 960ms linear infinite;animation-delay:-840ms}</style>
+<rect width="96" height="84" fill="#14141a" rx="10"/>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f0" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⠉⠉⠉</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f1" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⠛⠛⠛</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f2" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⠿⠿⠿</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f3" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣿⣿⣿</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f4" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣶⣶⣶</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f5" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣤⣤⣤</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f6" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣀⣀⣀</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f7" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⠀⠀⠀</text>
+<text x="48.0" y="72" text-anchor="middle" font-size="9" fill="#444"
+  font-family="'Courier New',monospace">scanline</text>
+</svg>

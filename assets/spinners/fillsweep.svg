@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="84">
+<style>@keyframes s{0%,9.090%{opacity:1}9.091%,100%{opacity:0}}.f0{animation:s 1100ms linear infinite;animation-delay:0ms}.f1{animation:s 1100ms linear infinite;animation-delay:-100ms}.f2{animation:s 1100ms linear infinite;animation-delay:-200ms}.f3{animation:s 1100ms linear infinite;animation-delay:-300ms}.f4{animation:s 1100ms linear infinite;animation-delay:-400ms}.f5{animation:s 1100ms linear infinite;animation-delay:-500ms}.f6{animation:s 1100ms linear infinite;animation-delay:-600ms}.f7{animation:s 1100ms linear infinite;animation-delay:-700ms}.f8{animation:s 1100ms linear infinite;animation-delay:-800ms}.f9{animation:s 1100ms linear infinite;animation-delay:-900ms}.f10{animation:s 1100ms linear infinite;animation-delay:-1000ms}</style>
+<rect width="96" height="84" fill="#14141a" rx="10"/>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f0" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣀⣀</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f1" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣤⣤</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f2" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣶⣶</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f3" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣿⣿</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f4" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣿⣿</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f5" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣿⣿</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f6" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣶⣶</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f7" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣤⣤</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f8" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⣀⣀</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f9" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⠀⠀</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f10" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⠀⠀</text>
+<text x="48.0" y="72" text-anchor="middle" font-size="9" fill="#444"
+  font-family="'Courier New',monospace">fillsweep</text>
+</svg>

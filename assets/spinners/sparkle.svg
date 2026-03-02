@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="84">
+<style>@keyframes s{0%,16.666%{opacity:1}16.667%,100%{opacity:0}}.f0{animation:s 900ms linear infinite;animation-delay:0ms}.f1{animation:s 900ms linear infinite;animation-delay:-150ms}.f2{animation:s 900ms linear infinite;animation-delay:-300ms}.f3{animation:s 900ms linear infinite;animation-delay:-450ms}.f4{animation:s 900ms linear infinite;animation-delay:-600ms}.f5{animation:s 900ms linear infinite;animation-delay:-750ms}</style>
+<rect width="96" height="84" fill="#14141a" rx="10"/>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f0" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⡡⠊⢔⠡</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f1" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⠊⡰⡡⡘</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f2" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⢔⢅⠈⢢</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f3" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⡁⢂⠆⡍</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f4" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⢔⠨⢑⢐</text>
+<text x="48.0" y="40" text-anchor="middle" dominant-baseline="middle" class="f5" font-size="22" fill="#00ff99" font-family="'Courier New',monospace">⠨⡑⡠⠊</text>
+<text x="48.0" y="72" text-anchor="middle" font-size="9" fill="#444"
+  font-family="'Courier New',monospace">sparkle</text>
+</svg>
