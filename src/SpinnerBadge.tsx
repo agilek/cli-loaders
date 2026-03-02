@@ -1,6 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { Spinner } from './Spinner';
-import { BaseSpinnerProps } from './Spinner';
+import { Spinner, BaseSpinnerProps } from './Spinner';
 
 export interface SpinnerBadgeProps extends BaseSpinnerProps {
   /** Badge text */

@@ -144,7 +144,7 @@ export function SpinnerInline({ children, gap = '0.4em', ...spinnerProps }: Spin
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap }}>
       <Spinner {...spinnerProps} />
-      {children && <span>{children}</span>}
+      {children ? <span>{children}</span> : null}
     </span>
   );
 }

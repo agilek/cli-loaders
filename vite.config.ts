@@ -22,7 +22,7 @@ export default defineConfig(({ command }) => {
           fileName: format => `cli-loaders.${format === 'es' ? 'js' : 'cjs'}`,
         },
         rollupOptions: {
-          external: ['react', 'react/jsx-runtime', 'unicode-animations'],
+          external: ['react', 'react/jsx-runtime'],
           output: {
             globals: {
               react: 'React',

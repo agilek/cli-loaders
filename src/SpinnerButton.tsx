@@ -1,6 +1,5 @@
 import React, { ButtonHTMLAttributes, forwardRef } from 'react';
-import { Spinner } from './Spinner';
-import { BaseSpinnerProps } from './Spinner';
+import { Spinner, BaseSpinnerProps } from './Spinner';
 
 export interface SpinnerButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Show the spinner and disable interaction */

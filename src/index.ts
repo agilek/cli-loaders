@@ -9,7 +9,7 @@ export type { SpinnerButtonProps } from './SpinnerButton';
 export { SpinnerBadge } from './SpinnerBadge';
 export type { SpinnerBadgeProps } from './SpinnerBadge';
 
-export { SpinnerText } from './SpinnerText';
+export { SpinnerText, SpinnerTextBookend } from './SpinnerText';
 export type { SpinnerTextProps } from './SpinnerText';
 
 export { SpinnerTrail } from './SpinnerTrail';

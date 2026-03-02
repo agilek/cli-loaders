@@ -1,3 +1,5 @@
 node_modules/
 dist/
 *.mp4
+*.local
+.DS_Store

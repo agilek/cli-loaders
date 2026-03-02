@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { SpinnerName } from './spinners';
 
 export interface SpinnerConfig {
@@ -37,8 +37,12 @@ export function SpinnerProvider({
   defaultSpeed = defaults.defaultSpeed,
   respectReducedMotion = defaults.respectReducedMotion,
 }: SpinnerProviderProps) {
+  const value = useMemo(
+    () => ({ defaultName, defaultColor, defaultSize, defaultSpeed, respectReducedMotion }),
+    [defaultName, defaultColor, defaultSize, defaultSpeed, respectReducedMotion],
+  );
   return (
-    <SpinnerContext.Provider value={{ defaultName, defaultColor, defaultSize, defaultSpeed, respectReducedMotion }}>
+    <SpinnerContext.Provider value={value}>
       {children}
     </SpinnerContext.Provider>
   );

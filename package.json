@@ -15,7 +15,9 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "dev": "vite",
@@ -29,13 +31,22 @@
     "unicode",
     "animation",
     "loading",
-    "decorator"
+    "loader",
+    "cli",
+    "terminal"
   ],
-  "author": "",
+  "author": "Mike Acler <m@acler.cz>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agile/cli-loaders.git"
+  },
+  "homepage": "https://github.com/agile/cli-loaders#readme",
+  "bugs": {
+    "url": "https://github.com/agile/cli-loaders/issues"
+  },
   "peerDependencies": {
-    "react": ">=18.0.0",
-    "unicode-animations": ">=1.0.0"
+    "react": ">=18.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
