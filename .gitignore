@@ -1,5 +1,7 @@
 node_modules/
 dist/
+demo-dist/
 *.mp4
 *.local
 .DS_Store
+.vercel
