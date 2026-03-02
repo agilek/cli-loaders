@@ -8,6 +8,8 @@ export interface SpinnerTrailProps extends BaseSpinnerProps {
   trailLength?: number;
   /** Opacity of the oldest ghost frame (newest is always 1.0) */
   minOpacity?: number;
+  /** Reverse the opacity gradient — 1.0 on the left fading out to the right */
+  reverse?: boolean;
 }
 
 export function SpinnerTrail({
@@ -19,6 +21,7 @@ export function SpinnerTrail({
   ignoreReducedMotion,
   trailLength = 4,
   minOpacity = 0.1,
+  reverse = false,
   className,
   style,
   label = 'Loading',
@@ -53,7 +56,10 @@ export function SpinnerTrail({
   return (
     <span aria-label={label} role="status" className={className} style={baseStyle}>
       {frames.map((frame, i) => {
-        const opacity = minOpacity + (1 - minOpacity) * (i / (trailLength - 1));
+        const t = i / (trailLength - 1);
+        const opacity = reverse
+          ? 1 - (1 - minOpacity) * t
+          : minOpacity + (1 - minOpacity) * t;
         return (
           <span key={i} aria-hidden="true" style={{ opacity }}>
             {frame}
