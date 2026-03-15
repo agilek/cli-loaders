@@ -1,6 +1,6 @@
 # cli-loaders for react
 
-> Braille unicode spinners as React decorator components. — **[Live demo →](https://cli-loaders-two.vercel.app)**
+> Braille unicode spinners as React decorator components. — **[Live demo →](https://cli-loaders-two.vercel.app)** · **[GitHub →](https://github.com/agilek/cli-loaders)**
 
 <div align="center">
   <img src="assets/spinners/braille.svg" alt="braille">
