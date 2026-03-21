@@ -1,6 +1,6 @@
 {
   "name": "@agilek/cli-loaders",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Braille unicode spinners as React decorator components",
   "type": "module",
   "sideEffects": false,
@@ -41,11 +41,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/agile/cli-loaders.git"
+    "url": "https://github.com/agilek/cli-loaders.git"
   },
-  "homepage": "https://github.com/agile/cli-loaders#readme",
+  "homepage": "https://github.com/agilek/cli-loaders#readme",
   "bugs": {
-    "url": "https://github.com/agile/cli-loaders/issues"
+    "url": "https://github.com/agilek/cli-loaders/issues"
   },
   "peerDependencies": {
     "react": ">=18.0.0"

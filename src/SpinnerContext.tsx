@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { SpinnerName } from './spinners';
+import { SpinnerName, DotShape } from './spinners';
 
 export interface SpinnerConfig {
   defaultName: SpinnerName;
   defaultColor: string | undefined;
   defaultSize: string | number | undefined;
   defaultSpeed: number;
+  defaultShape: DotShape | undefined;
   /** When true (default), animations pause if the OS has prefers-reduced-motion: reduce */
   respectReducedMotion: boolean;
 }
@@ -15,6 +16,7 @@ const defaults: SpinnerConfig = {
   defaultColor: undefined,
   defaultSize: undefined,
   defaultSpeed: 1,
+  defaultShape: undefined,
   respectReducedMotion: true,
 };
 
@@ -26,6 +28,7 @@ export interface SpinnerProviderProps {
   defaultColor?: string;
   defaultSize?: string | number;
   defaultSpeed?: number;
+  defaultShape?: DotShape;
   respectReducedMotion?: boolean;
 }
 
@@ -35,11 +38,12 @@ export function SpinnerProvider({
   defaultColor = defaults.defaultColor,
   defaultSize = defaults.defaultSize,
   defaultSpeed = defaults.defaultSpeed,
+  defaultShape = defaults.defaultShape,
   respectReducedMotion = defaults.respectReducedMotion,
 }: SpinnerProviderProps) {
   const value = useMemo(
-    () => ({ defaultName, defaultColor, defaultSize, defaultSpeed, respectReducedMotion }),
-    [defaultName, defaultColor, defaultSize, defaultSpeed, respectReducedMotion],
+    () => ({ defaultName, defaultColor, defaultSize, defaultSpeed, defaultShape, respectReducedMotion }),
+    [defaultName, defaultColor, defaultSize, defaultSpeed, defaultShape, respectReducedMotion],
   );
   return (
     <SpinnerContext.Provider value={value}>

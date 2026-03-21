@@ -11,7 +11,7 @@ import {
   useSpinner,
   spinnerNames,
 } from '../src/index';
-import type { SpinnerName } from '../src/index';
+import type { SpinnerName, DotShape } from '../src/index';
 
 // ─── Spinner groups ────────────────────────────────────────────────────────────
 
@@ -30,6 +30,15 @@ const PRESETS = [
   { color: '#f59e0b', label: 'Amber' },
   { color: '#ef4444', label: 'Red' },
   { color: '#38bdf8', label: 'Sky' },
+];
+
+// ─── Shape presets ────────────────────────────────────────────────────────────
+
+const SHAPES: { shape: DotShape | undefined; label: string }[] = [
+  { shape: undefined, label: 'Braille' },
+  { shape: 'circle', label: 'Circle' },
+  { shape: 'square', label: 'Square' },
+  { shape: 'diamond', label: 'Diamond' },
 ];
 
 // ─── Utility ──────────────────────────────────────────────────────────────────
@@ -141,12 +150,12 @@ function CardHeader({ label, code, color, muted, containerHovered = true }: { la
 // ─── Spinner card ─────────────────────────────────────────────────────────────
 
 function SpinnerCard({
-  name, color, size, speed, paused, dark, muted,
+  name, color, size, speed, paused, shape, dark, muted,
 }: {
-  name: SpinnerName; color: string; size: string; speed: number; paused: boolean; dark: boolean; muted: string;
+  name: SpinnerName; color: string; size: string; speed: number; paused: boolean; shape?: DotShape; dark: boolean; muted: string;
 }) {
   const [hovered, setHovered] = useState(false);
-  const snippet = `<Spinner name="${name}" color="${color}" size="${size}" />`;
+  const snippet = `<Spinner name="${name}" color="${color}" size="${size}"${shape ? ` shape="${shape}"` : ''} />`;
 
   return (
     <div
@@ -168,7 +177,7 @@ function SpinnerCard({
         <span style={{ fontSize: '0.7rem', color: muted, fontFamily: 'monospace' }}>{name}</span>
         <CopyButton code={snippet} color={color} muted={muted} visible={hovered} style={{ marginTop: -5, marginRight: -5 }} />
       </div>
-      <Spinner name={name} color={color} size={size} speed={speed} paused={paused} style={{ marginTop: 8 }} />
+      <Spinner name={name} color={color} size={size} speed={speed} paused={paused} shape={shape} style={{ marginTop: 8 }} />
     </div>
   );
 }
@@ -208,6 +217,7 @@ export default function App() {
   const [color, setColor] = useState('#00ff99');
   const [speed, setSpeed] = useState(1);
   const [size, setSize] = useState('1.5rem');
+  const [shape, setShape] = useState<DotShape | undefined>(undefined);
   const [paused, setPaused] = useState(false);
   const [dark, setDark] = useState(() =>
     window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -264,11 +274,11 @@ export default function App() {
         {/* Header */}
         <header style={{ maxWidth: 900, margin: '0 auto 3rem', textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '0.6rem' }}>
-            <SpinnerTrail name={spinner} color={color} size="1.8rem" speed={speed} paused={paused} trailLength={4} />
+            <SpinnerTrail name={spinner} color={color} size="1.8rem" speed={speed} paused={paused} shape={shape} trailLength={4} />
             <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 700, letterSpacing: '-0.03em' }}>
               cli-loaders
             </h1>
-            <SpinnerTrail name={spinner} color={color} size="1.8rem" speed={speed} paused={paused} trailLength={4} reverse />
+            <SpinnerTrail name={spinner} color={color} size="1.8rem" speed={speed} paused={paused} shape={shape} trailLength={4} reverse />
           </div>
           <p style={{ margin: '0 0 0.75rem', color: muted, fontSize: '1rem' }}>
             Braille unicode spinners as React decorator components
@@ -280,6 +290,22 @@ export default function App() {
               color: muted, fontSize: '0.78rem', cursor: 'pointer',
             }}>
               {paused ? '▶ Resume' : '⏸ Pause'}
+            </button>
+            <button
+              onClick={() => {
+                setSpinner('braille');
+                setColor('#00ff99');
+                setSpeed(1);
+                setSize('1.5rem');
+                setShape(undefined);
+              }}
+              style={{
+                padding: '0.3rem 0.9rem', borderRadius: 8,
+                border: `1px solid ${cardBorder}`, background: 'transparent',
+                color: muted, fontSize: '0.78rem', cursor: 'pointer',
+              }}
+            >
+              ↺ Reset
             </button>
             <a
               href="https://github.com/agilek/cli-loaders"
@@ -314,9 +340,35 @@ export default function App() {
           )}
         </header>
 
+        {/* Spinner picker — separate section */}
+        <section style={{ maxWidth: 900, margin: '0 auto 3rem' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+            {spinnerNames.map(n => {
+              const active = spinner === n;
+              return (
+                <button
+                  key={n}
+                  onClick={() => setSpinner(n)}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.35em',
+                    padding: '0.2rem 0.55rem', borderRadius: 6,
+                    border: `1px solid ${active ? color : cardBorder}`,
+                    background: active ? hex8(color, '18') : 'transparent',
+                    color: active ? color : muted,
+                    fontSize: '0.7rem', cursor: 'pointer', fontFamily: 'monospace',
+                  }}
+                >
+                  <Spinner name={n} color={active ? color : muted} size="0.85em" speed={speed} paused={paused} />
+                  {n}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
         {/* Controls */}
-        <section style={{ maxWidth: 900, margin: '0 auto 3rem', background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 12, padding: '1.5rem' }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', alignItems: 'flex-end' }}>
+        <section style={{ maxWidth: 900, margin: '0 auto 2.5rem', background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 12, padding: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-end', minWidth: 0 }}>
 
             {/* Colour */}
             <div>
@@ -359,7 +411,7 @@ export default function App() {
             <div>
               <label style={{ display: 'block', fontSize: '0.72rem', color: muted, marginBottom: '0.5rem' }}>Speed — {speed}×</label>
               <input type="range" min="0.25" max="4" step="0.25" value={speed}
-                onChange={e => setSpeed(Number(e.target.value))} style={{ width: 120 }} />
+                onChange={e => setSpeed(Number(e.target.value))} style={{ width: 80 }} />
             </div>
 
             {/* Size */}
@@ -378,33 +430,22 @@ export default function App() {
               </div>
             </div>
 
-          </div>
-
-          {/* Spinner picker */}
-          <div style={{ marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: `1px solid ${cardBorder}` }}>
-            <label style={{ display: 'block', fontSize: '0.72rem', color: muted, marginBottom: '0.6rem' }}>Spinner</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-              {spinnerNames.map(n => {
-                const active = spinner === n;
-                return (
-                  <button
-                    key={n}
-                    onClick={() => setSpinner(n)}
-                    style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '0.35em',
-                      padding: '0.2rem 0.55rem', borderRadius: 6,
-                      border: `1px solid ${active ? color : cardBorder}`,
-                      background: active ? hex8(color, '18') : 'transparent',
-                      color: active ? color : muted,
-                      fontSize: '0.7rem', cursor: 'pointer', fontFamily: 'monospace',
-                    }}
-                  >
-                    <Spinner name={n} color={active ? color : muted} size="0.85em" speed={speed} paused={paused} />
-                    {n}
-                  </button>
-                );
-              })}
+            {/* Shape */}
+            <div>
+              <label style={{ display: 'block', fontSize: '0.72rem', color: muted, marginBottom: '0.5rem' }}>Dot Shape</label>
+              <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+                {SHAPES.map(s => (
+                  <button key={s.label} onClick={() => setShape(s.shape)} style={{
+                    padding: '0.2rem 0.55rem', borderRadius: 6,
+                    border: `1px solid ${shape === s.shape ? color : cardBorder}`,
+                    background: shape === s.shape ? hex8(color, '22') : 'transparent',
+                    color: shape === s.shape ? color : muted,
+                    fontSize: '0.7rem', cursor: 'pointer',
+                  }}>{s.label}</button>
+                ))}
+              </div>
             </div>
+
           </div>
 
         </section>
@@ -417,7 +458,7 @@ export default function App() {
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '0.75rem' }}>
               {group.names.map(name => (
-                <SpinnerCard key={name} name={name} color={color} size={size} speed={speed} paused={paused} dark={dark} muted={muted} />
+                <SpinnerCard key={name} name={name} color={color} size={size} speed={speed} paused={paused} shape={shape} dark={dark} muted={muted} />
               ))}
             </div>
           </section>
@@ -433,9 +474,9 @@ export default function App() {
             {/* SpinnerInline */}
             <HoverCard style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 10, padding: '1.25rem' }}>
               {(hovered) => (<>
-                <CardHeader label="SpinnerInline" color={color} muted={muted} containerHovered={hovered} code={`<SpinnerInline name="${spinner}" color="${color}">\n  Fetching data…\n</SpinnerInline>`} />
+                <CardHeader label="SpinnerInline" color={color} muted={muted} containerHovered={hovered} code={`<SpinnerInline name="${spinner}" color="${color}"${shape ? ` shape="${shape}"` : ''}>\n  Fetching data…\n</SpinnerInline>`} />
                 <div style={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '3rem' }}>
-                  <SpinnerInline name={spinner} color={color} speed={speed} paused={paused}>Fetching data…</SpinnerInline>
+                  <SpinnerInline name={spinner} color={color} speed={speed} paused={paused} shape={shape}>Fetching data…</SpinnerInline>
                 </div>
               </>)}
             </HoverCard>

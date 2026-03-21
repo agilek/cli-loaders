@@ -1,6 +1,6 @@
 import React, { CSSProperties, forwardRef } from 'react';
 import { useSpinner } from './useSpinner';
-import { SpinnerName } from './spinners';
+import { SpinnerName, DotShape, brailleToGrid } from './spinners';
 import { useSpinnerConfig } from './SpinnerContext';
 
 // Visually-hidden helper for accessible status labels
@@ -32,6 +32,63 @@ export interface BaseSpinnerProps {
   style?: CSSProperties;
   /** Accessible label announced by screen readers */
   label?: string;
+  /** Shape of individual dots: 'circle', 'square', or 'diamond'. When set, renders as SVG instead of text. */
+  shape?: DotShape;
+}
+
+// ─── SVG Shape Rendering ──────────────────────────────────────────────────────
+
+const DOT_SPACING = 10;
+const DOT_RADIUS = 3.5;
+
+function renderShape(shape: DotShape, cx: number, cy: number, r: number) {
+  const key = `${cx}-${cy}`;
+  if (shape === 'square') {
+    return <rect key={key} x={cx - r} y={cy - r} width={r * 2} height={r * 2} />;
+  }
+  if (shape === 'diamond') {
+    return (
+      <polygon
+        key={key}
+        points={`${cx},${cy - r} ${cx + r},${cy} ${cx},${cy + r} ${cx - r},${cy}`}
+      />
+    );
+  }
+  return <circle key={key} cx={cx} cy={cy} r={r} />;
+}
+
+interface SpinnerShapeSVGProps {
+  frame: string;
+  shape: DotShape;
+  color: string | undefined;
+  size: string | number | undefined;
+}
+
+function SpinnerShapeSVG({ frame, shape, color, size }: SpinnerShapeSVGProps) {
+  const grid = brailleToGrid(frame);
+  const rows = grid.length;
+  const cols = grid[0]?.length ?? 0;
+  const vw = cols * DOT_SPACING;
+  const vh = rows * DOT_SPACING;
+
+  return (
+    <svg
+      aria-hidden="true"
+      width={size ?? '1em'}
+      height={size ?? '1em'}
+      viewBox={`0 0 ${vw} ${vh}`}
+      style={{ display: 'inline-block', verticalAlign: 'middle' }}
+      fill={color ?? 'currentColor'}
+    >
+      {grid.flatMap((row, r) =>
+        row.map((active, c) =>
+          active
+            ? renderShape(shape, c * DOT_SPACING + DOT_SPACING / 2, r * DOT_SPACING + DOT_SPACING / 2, DOT_RADIUS)
+            : null
+        )
+      )}
+    </svg>
+  );
 }
 
 // ─── Spinner ──────────────────────────────────────────────────────────────────
@@ -39,7 +96,7 @@ export interface BaseSpinnerProps {
 export type SpinnerProps = BaseSpinnerProps & Omit<React.HTMLAttributes<HTMLSpanElement>, keyof BaseSpinnerProps>;
 
 export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinner(
-  { name, color, size, speed, paused, ignoreReducedMotion, className, style, label, ...rest },
+  { name, color, size, speed, paused, ignoreReducedMotion, className, style, label, shape, ...rest },
   ref,
 ) {
   const ctx = useSpinnerConfig();
@@ -48,6 +105,7 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinne
   const resolvedSize = size ?? ctx.defaultSize;
   const resolvedSpeed = speed ?? ctx.defaultSpeed;
   const resolvedIgnore = ignoreReducedMotion ?? !ctx.respectReducedMotion;
+  const resolvedShape = shape ?? ctx.defaultShape;
 
   const frame = useSpinner(resolvedName, resolvedSpeed, paused ?? false, resolvedIgnore);
   const resolvedLabel = label ?? 'Loading';
@@ -60,19 +118,23 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinne
       {...rest}
     >
       {/* Glyph — hidden from AT, it's just visual noise */}
-      <span
-        aria-hidden="true"
-        style={{
-          fontFamily: 'monospace',
-          lineHeight: 1,
-          userSelect: 'none',
-          whiteSpace: 'pre',
-          color: resolvedColor ?? 'currentColor',
-          fontSize: resolvedSize,
-        }}
-      >
-        {frame}
-      </span>
+      {resolvedShape ? (
+        <SpinnerShapeSVG frame={frame} shape={resolvedShape} color={resolvedColor} size={resolvedSize} />
+      ) : (
+        <span
+          aria-hidden="true"
+          style={{
+            fontFamily: 'monospace',
+            lineHeight: 1,
+            userSelect: 'none',
+            whiteSpace: 'pre',
+            color: resolvedColor ?? 'currentColor',
+            fontSize: resolvedSize,
+          }}
+        >
+          {frame}
+        </span>
+      )}
       {/* Screen-reader-only status label */}
       <span role="status" aria-live="polite" style={srOnly}>
         {resolvedLabel}

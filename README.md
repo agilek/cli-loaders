@@ -1,6 +1,6 @@
 # cli-loaders for react
 
-> Braille unicode spinners as React decorator components. — **[Live demo →](https://cli-loaders-two.vercel.app)** · **[GitHub →](https://github.com/agilek/cli-loaders)**
+> Animated braille-glyph loading spinners for React. 19 unique animations, zero dependencies, fully accessible. — **[Live demo →](https://cli-loaders-two.vercel.app)** · **[GitHub →](https://github.com/agilek/cli-loaders)**
 
 <div align="center">
   <img src="assets/spinners/braille.svg" alt="braille">
@@ -26,14 +26,32 @@
 
 `cli-loaders` gives you 19 animated braille-glyph spinners as a set of composable, accessible React components. Zero runtime dependencies beyond React itself.
 
+## Features
+
+- **19 spinner animations** with unique braille Unicode patterns
+- **Zero runtime dependencies** — pure React, no external libraries
+- **Fully accessible** — WCAG 2.1 AA, `prefers-reduced-motion` support, semantic HTML
+- **TypeScript first** — complete type definitions, `DotShape` export for custom rendering
+- **Composable** — 7 components + 2 hooks for any use case
+- **Small bundle** — ~15KB gzipped (lib) + optional SVG rendering
+- **Shape customization** — render as circles, squares, or diamonds (SVG mode)
+
+## Why cli-loaders?
+
+**vs. react-spinners:** Smaller bundle, braille Unicode art for terminal-like aesthetics, context API for global defaults, shape customization (circles/squares/diamonds)
+
+**vs. react-loading:** Zero dependencies, comprehensive accessibility testing, 19+ unique animations, SVG rendering mode
+
+**vs. custom CSS:** No @keyframes to maintain, out-of-the-box reduced-motion support, semantic HTML, accessible by default
+
 ## Install
 
 ```sh
-npm install cli-loaders
+npm install @agilek/cli-loaders
 # or
-pnpm add cli-loaders
+pnpm add @agilek/cli-loaders
 # or
-yarn add cli-loaders
+yarn add @agilek/cli-loaders
 ```
 
 **Requires React ≥ 18.**
@@ -41,13 +59,16 @@ yarn add cli-loaders
 ## Quick start
 
 ```tsx
-import { Spinner } from 'cli-loaders';
+import { Spinner } from '@agilek/cli-loaders';
 
 // Minimal — defaults to the "braille" spinner
 <Spinner />
 
 // Named + coloured
 <Spinner name="helix" color="#7c3aed" size="1.5rem" />
+
+// With custom dot shape (renders as SVG instead of braille text)
+<Spinner name="scan" color="#00ff99" shape="square" size="2rem" />
 ```
 
 ## Components
@@ -64,6 +85,7 @@ The base animated glyph. Renders as an inline `<span>` so it drops naturally int
 | `speed` | `number` | `1` | Playback multiplier — `2` = twice as fast |
 | `paused` | `boolean` | `false` | Freeze the animation |
 | `ignoreReducedMotion` | `boolean` | `false` | Override `prefers-reduced-motion` and always animate |
+| `shape` | `"circle" \| "square" \| "diamond"` | `undefined` | Render dots as SVG shapes instead of braille text |
 | `label` | `string` | `"Loading"` | Accessible label announced by screen readers |
 | `className` | `string` | — | Applied to the outer `<span>` |
 | `style` | `CSSProperties` | — | Inline styles for the outer `<span>` |
@@ -231,6 +253,7 @@ Sets global defaults for every `Spinner`-family component in the subtree. Indivi
 | `defaultColor` | `string` | `undefined` | Default color |
 | `defaultSize` | `string \| number` | `undefined` | Default glyph size |
 | `defaultSpeed` | `number` | `1` | Default speed multiplier |
+| `defaultShape` | `"circle" \| "square" \| "diamond"` | `undefined` | Default dot shape |
 | `respectReducedMotion` | `boolean` | `true` | Pause animations when the OS has `prefers-reduced-motion: reduce` |
 
 ---
@@ -296,6 +319,90 @@ import { spinnerNames } from 'cli-loaders';
 - `SpinnerButton` sets `aria-busy` and `aria-disabled` on the button element automatically.
 - `SpinnerOverlay` sets `aria-busy` on the container and uses the native `inert` attribute to prevent keyboard/AT access to obscured content.
 - By default, all animations respect `prefers-reduced-motion: reduce`. Override per-component with `ignoreReducedMotion` or globally via `<SpinnerProvider respectReducedMotion={false}>`.
+
+---
+
+---
+
+## FAQ
+
+**Can I use this with Next.js?**
+Yes. Works as both client and server components in the App Router.
+
+**How do I customize spinner animations?**
+Use the `useSpinner` hook to drive any custom rendering. See [useSpinner hook](#usespinner-hook) for examples.
+
+**Does this work with TypeScript?**
+Full type support. All component props and the `DotShape` type are exported for type safety.
+
+**How do I change shapes (circles, squares, diamonds)?**
+Use the `shape` prop: `<Spinner shape="square" />`. See [Spinner props](#spinner) for details.
+
+**Does this support reduced motion preferences?**
+Yes, by default. Animations pause when `prefers-reduced-motion: reduce` is set. Override with `ignoreReducedMotion={true}`.
+
+**What's the bundle size?**
+~15KB gzipped for the core library. SVG rendering mode adds ~1KB.
+
+---
+
+## Common Patterns
+
+### Form submission with loading state
+
+```tsx
+const [loading, setLoading] = useState(false);
+
+async function handleSubmit() {
+  setLoading(true);
+  try {
+    await api.post('/submit', data);
+  } finally {
+    setLoading(false);
+  }
+}
+
+return (
+  <SpinnerButton
+    loading={loading}
+    onClick={handleSubmit}
+    spinnerProps={{ name: 'helix', color: '#00ff99' }}
+  >
+    {loading ? 'Submitting...' : 'Submit'}
+  </SpinnerButton>
+);
+```
+
+### Full-screen loading overlay
+
+```tsx
+const [fetching, setFetching] = useState(false);
+
+return (
+  <SpinnerOverlay
+    active={fetching}
+    name="orbit"
+    size="2rem"
+    backdrop="rgba(0,0,0,0.5)"
+  >
+    <Dashboard data={data} />
+  </SpinnerOverlay>
+);
+```
+
+### Inline status message with shape customization
+
+```tsx
+return (
+  <SpinnerInline
+    name="scan"
+    shape="diamond"
+    color="#7c3aed"
+  >
+    Syncing your data...
+  </SpinnerInline>
+);
+```
 
 ---
 

@@ -24,4 +24,4 @@ export { useSpinner, useSpinnerFrames } from './useSpinner';
 
 // Data
 export { spinners, spinnerNames } from './spinners';
-export type { SpinnerName, SpinnerDef } from './spinners';
+export type { SpinnerName, SpinnerDef, DotShape } from './spinners';
