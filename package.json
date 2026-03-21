@@ -1,5 +1,5 @@
 {
-  "name": "cli-loaders",
+  "name": "@agilek/cli-loaders",
   "version": "1.0.0",
   "description": "Braille unicode spinners as React decorator components",
   "type": "module",
